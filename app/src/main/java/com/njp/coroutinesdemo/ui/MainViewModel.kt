@@ -17,7 +17,7 @@ class MainViewModel : ViewModel() {
 
     fun getData() {
         launch(
-            {
+            block = {
                 loadState.value = LoadState.Loading()
                 val data1 = async {
                     delay(3000)
@@ -32,10 +32,10 @@ class MainViewModel : ViewModel() {
                 }
                 loadState.value = LoadState.Success()
             },
-            {
+            onError = {
                 loadState.value = LoadState.Fail(it.message ?: "加载失败")
             },
-            {
+            onComplete = {
                 //结束
             }
         )
